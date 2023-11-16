@@ -23,11 +23,7 @@ typedef struct show{
 }show;
 
 
-typedef struct usuario{
-    char nome[100];
-    char cpf[30];
-    char endereco[100];
-}usuario;
+
 
 void exibirCatalogo(show* shows, int qtdshows)
 {
@@ -110,6 +106,9 @@ int main() {
 }
     for(int i = 0; i <MAX_usuarioS;i++){
         scanf("%s",usuario[i].nome);
+        scanf("%s",usuario[i].sexo);
+        scanf("%c",usuario[i].idade);
+        
     }
 
     return 0;
