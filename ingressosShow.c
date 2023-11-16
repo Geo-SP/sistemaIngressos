@@ -31,22 +31,86 @@ typedef struct usuario{
 
 void exibirCatalogo(show* shows, int qtdshows)
 {
-    printf("Shows disponiveis:\n");
+   switch(bandaseleciona){
+    case 1:
+    printf("")
+   }
     
 }
 
 
 int main(){
     
-usuario pessoa;
- char banda[100];
+#define MAX_usuarioS 10
 
- printf("Digite as informacoes para se Cadastrar\n");
-       scanf("%s",pessoa.nome);
-       scanf("%s",pessoa.cpf);
-       scanf("%s",pessoa.endereco); 
-printf("Digite a banda desejada");
-    scanf("%s",banda);
+typedef struct {
+    char nome[30];
+    char sexo[10];
+    char idade[5];
+    int telefone[11];
+} usuario;
+
+void cabecalho2() {
+    // Função que exibe o cabeçalho
+    printf("=== Sistema de Consulta de usuarios ===\n\n");
+}
+
+int pesquisar(usuario usuarios[], int totalusuarios) {
+    char nome[30];
+    int i, encontrado = 0; // variavel para mostrar se o usuario foi encontrado
+
+    cabecalho2();
+
+    fflush(stdin);
+    printf("Digite o nome a pesquisar: ");
+    gets(nome);
+
+    for (i = 0; i < totalusuarios; i++) {
+        if (strcmp(nome, usuarios[i].nome) == 0) {
+            printf("\nNome: %s\n", usuarios[i].nome);
+            printf("Sexo: %s\n", usuarios[i].sexo);
+            printf("Idade: %s\n", usuarios[i].idade);
+            printf("telefone: %c\n",usuarios[i].telefone);
+            encontrado = 1;
+        }
+    }
+
+    if (!encontrado) {
+        printf("usuario nao encontrado.\n");
+        return 1; // Código indicando que a pesquisa não foi bem-sucedida
+    }
+
+    getch();
+    return 0; // Código indicando que a pesquisa foi bem-sucedida
+}
+
+int main() {
+    FILE *resposta;
+    usuario usuarios[MAX_usuarioS];
+    int totalusuarios = 0;
+
+    resposta = fopen("resposta.txt", "rt");
+
+    if (resposta == NULL) {
+        printf("Erro na abertura do arquivo...\n");
+        return 1; // Encerra o programa com código de erro
+    }
+
+    // Lê os usuarios do arquivo para o array de estruturas
+    while (fread(&usuarios[totalusuarios], sizeof(usuario), 1, resposta) == 1) {
+        totalusuarios++;
+    }
+
+    fclose(resposta);
+
+    // Chama a função de pesquisa
+    int resultadoPesquisa = pesquisar(usuarios, totalusuarios);
+
+    return resultadoPesquisa; // Retorna o resultado da pesquisa como código de saída
+}
+    for(int i = 0; i <MAX_usuarioS;i++){
+        scanf("%s",usuario[i].nome);
+    }
 
     return 0;
 }
