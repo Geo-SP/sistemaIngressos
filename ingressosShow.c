@@ -15,8 +15,9 @@ Leitura e gravação dos dados no disco (próximas aulas)*/
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct show{
-    int id;
+typedef struct show
+{
+    int idBanda;
     char nome[100];
     char data[20];
     float preco;
