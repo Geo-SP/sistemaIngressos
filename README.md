@@ -1,7 +1,7 @@
 # Sistema de Vendas de Ingresso para Shows
 <img src = https://img.shields.io/badge/Status-Em_andamento-yellow> 
 
-Projeto destinado a criação de um sistema que realiza a venda de ingressos para shows, desenvolvido inteiramente em linguagem C, tal projeto parte da incitiva da disciplina SI203 - Algoritmos e Progração de Computadores II, ministrada na Faculdade de Tecnologia da UNICAMP.
+_Projeto destinado a criação de um sistema que realiza a venda de ingressos para shows, desenvolvido inteiramente em linguagem C, tal projeto parte da incitiva da disciplina SI203 - Algoritmos e Progração de Computadores II, ministrada na Faculdade de Tecnologia da UNICAMP._
 
 ### Nesse momento, para visualizar esse projeto em sua máquina:
 1. Obtenha um leitor de código compativel com a linguagem C [Ex.: Visual Studio Code](https://code.visualstudio.com)
