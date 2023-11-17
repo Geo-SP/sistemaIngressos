@@ -9,4 +9,4 @@ Projeto destinado a criação de um sistema que realiza a venda de ingressos par
 2. Após a obtenção da ferramenta, basta baixar os itens que deseja visualizar compilar e executar em sua máquina [Ex.: Artigo de tutoria](https://github.com/Wolfterro/Projetos-em-C)
 
 3. Divirta-se na compreensão dos códigos ou té mesmo no funcionamento por meio de um navegador &#129322;
-Projeto destinado ao desenvolvimento de um trabalho da disciplina SI203 - Algoritimos e programação de computadores II lecionada na Faculdade de Tecnologia da UNICAMP
+
