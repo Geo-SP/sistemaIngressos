@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include <unistd.h>
 
 // Função para gerar uma chave PIX aleatória
 void gerarChavePIX(char *chavePix) {
@@ -14,24 +16,52 @@ void gerarChavePIX(char *chavePix) {
     chavePix[comprimentoChave] = '\0';
 }
 
-// Função para coletar informações do cartão de crédito
+// Tratamento para pagamento de cartão de crédito 
+struct Data {
+    int mes;
+    int ano;
+};
+
+void pausa() {
+    sleep(1); // Pausa por 1 segundos
+}
+
 void coletarInfoCartaoCredito() {
     int parcelas;
-    int nCartaoC; 
-    int vCartaoC;
-    int ccvCartaoC; 
-    printf("Digite o número do cartão de crédito(XXXXXXXXXXXXX): ");
-    // Código para coletar o número do cartão de crédito
-         scanf("%d\n", &nCartaoC); 
-      printf("Digite a data de validade do cartão(MMAAAA): ");
-    // Código para coletar a data de validade do cartão
-         scanf("%d\n", &vCartaoC); 
-    printf("Digite o código de segurança do cartão(XXX): ");
-    // Código para coletar o código de segurança do cartão
-        scanf("%d\n", &ccvCartaoC); 
+    char nCartaoC[20];
+    char ccvCartaoC[4];
+    struct Data validade;
+
+    printf("Digite o número do cartão de crédito: ");
+    scanf("%19s\n", nCartaoC);
+
+    if (strlen(nCartaoC) != 16 || strspn(nCartaoC, "0123456789") != 16) {
+        printf("Número do cartão de crédito inválido. Certifique-se de inserir exatamente 16 dígitos numéricos.\n");
+        return;
+    }
+
+    printf("Digite a data de validade do cartão (MM/AAAA): ");
+    scanf("%d/%d\n", &validade.mes, &validade.ano);
+
+    printf("Digite o código de segurança do cartão: ");
+    scanf("%3s\n", ccvCartaoC);
+
+    if (strlen(ccvCartaoC) != 3 || strspn(ccvCartaoC, "0123456789") != 3) {
+        printf("Código de segurança do cartão inválido. Certifique-se de inserir exatamente 3 dígitos numéricos.\n");
+        return;
+    }
+
     printf("Escolha o número de parcelas (1 a 12): ");
     scanf("%d\n", &parcelas);
-    // Código para processar as informações do cartão de crédito, incluindo o número de parcelas
+
+    if (parcelas < 1 || parcelas > 12) {
+        printf("Número de parcelas inválido. Certifique-se de escolher entre 1 e 12.\n");
+        return;
+    }
+
+    printf("Aguarde, processando...\n");
+    pausa();
+
 }
 void coletarInfoCartaoDebito() {
     int nCartaoD; 
@@ -80,9 +110,6 @@ int main() {
             printf("Opção inválida!\n");
             return 1;
     }
-
-    printf("Etapa de pagamento concluída com sucesso!\n");
-
     return 0;
 }
 
