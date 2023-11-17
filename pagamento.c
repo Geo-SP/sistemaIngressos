@@ -4,7 +4,7 @@
 
 // Função para gerar uma chave PIX aleatória
 void gerarChavePIX(char *chavePix) {
-    const char caracteresPermitidos[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const char caracteresPermitidos[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&*#@";
     const int comprimentoChave = 40;
 
     srand(time(NULL));
@@ -17,21 +17,35 @@ void gerarChavePIX(char *chavePix) {
 // Função para coletar informações do cartão de crédito
 void coletarInfoCartaoCredito() {
     int parcelas;
-    
-    printf("Digite o número do cartão de crédito: ");
+    int nCartaoC; 
+    int vCartaoC;
+    int ccvCartaoC; 
+    printf("Digite o número do cartão de crédito(XXXXXXXXXXXXX): ");
     // Código para coletar o número do cartão de crédito
-    // ...
-    printf("Digite a data de validade do cartão: ");
+         scanf("%d\n", &nCartaoC); 
+      printf("Digite a data de validade do cartão(MMAAAA): ");
     // Código para coletar a data de validade do cartão
-    // ...
-    printf("Digite o código de segurança do cartão: ");
+         scanf("%d\n", &vCartaoC); 
+    printf("Digite o código de segurança do cartão(XXX): ");
     // Código para coletar o código de segurança do cartão
-    // ...
-
+        scanf("%d\n", &ccvCartaoC); 
     printf("Escolha o número de parcelas (1 a 12): ");
-    scanf("%d", &parcelas);
+    scanf("%d\n", &parcelas);
     // Código para processar as informações do cartão de crédito, incluindo o número de parcelas
-    // ...
+}
+void coletarInfoCartaoDebito() {
+    int nCartaoD; 
+    int vCartaoD;
+    int ccvCartaoD; 
+    printf("Digite o número do cartão de débito (XXXXXXXXXXXXX): ");
+    // Código para coletar o número do cartão de crédito
+         scanf("%d\n", &nCartaoD); 
+      printf("Digite a data de validade do cartão (MMAAAA): ");
+    // Código para coletar a data de validade do cartão
+         scanf("%d\n", &vCartaoD); 
+    printf("Digite o código de segurança do cartão (XXX): ");
+    // Código para coletar o código de segurança do cartão
+        scanf("%d\n", &ccvCartaoD); 
 }
 
 // Função para coletar informações do PIX
@@ -56,8 +70,8 @@ int main() {
             coletarInfoCartaoCredito();
             break;
         case 2:
-            // Implementar a função para o pagamento com cartão de débito, se necessário
-            printf("Pagamento com cartão de débito\n");
+             printf("Pagamento com cartão de débito\n");
+                coletarInfoCartaoDebito();
             break;
         case 3:
             coletarInfoPIX();
@@ -67,7 +81,8 @@ int main() {
             return 1;
     }
 
-    printf("Pagamento concluído com sucesso!\n");
+    printf("Etapa de pagamento concluída com sucesso!\n");
 
     return 0;
 }
+
