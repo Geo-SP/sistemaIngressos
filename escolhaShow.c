@@ -2,16 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Estrutura para armazenar os dados do show
 typedef struct {
     int id;
     char nome[50];
     char data[20];
     float preco;
-    int ingressos_disponiveis;
+    int ingressosDisponiveis;
 } Show;
 
-// Função para cadastrar um novo show
 void cadastrarShow(Show **shows, int *numShows) {
     (*numShows)++;
     *shows = realloc(*shows, (*numShows) * sizeof(Show));
@@ -22,26 +20,24 @@ void cadastrarShow(Show **shows, int *numShows) {
     printf("Digite a data do show: ");
     scanf("%s", (*shows)[*numShows - 1].data);
 
-    printf("Digite o preço do ingresso: ");
+    printf("Digite o preco do ingresso: ");
     scanf("%f", &(*shows)[*numShows - 1].preco);
 
-    printf("Digite a quantidade de ingressos disponíveis: ");
-    scanf("%d", &(*shows)[*numShows - 1].ingressos_disponiveis);
+    printf("Digite a quantidade de ingressos disponiveis: ");
+    scanf("%d", &(*shows)[*numShows - 1].ingressosDisponiveis);
 
     (*shows)[*numShows - 1].id = *numShows;
 }
 
-// Função para exibir os detalhes de um show
 void exibirShow(Show show) {
     printf("ID: %d\n", show.id);
     printf("Nome: %s\n", show.nome);
     printf("Data: %s\n", show.data);
-    printf("Preço: %.2f\n", show.preco);
-    printf("Ingressos disponíveis: %d\n", show.ingressos_disponiveis);
+    printf("Preco: %.2f\n", show.preco);
+    printf("Ingressos disponiveis: %d\n", show.ingressosDisponiveis);
     printf("----------------------------\n");
 }
 
-// Função para exibir todos os shows cadastrados
 void listarShows(Show *shows, int numShows) {
     for (int i = 0; i < numShows; i++) {
         exibirShow(shows[i]);
