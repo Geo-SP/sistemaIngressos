@@ -29,12 +29,14 @@ typedef struct show
     float preco;
 }show;
 
-typedef struct {
+/*typedef struct {
     char nome[30];
     char sexo[10];
     char idade[5];
     int telefone[11];
-} usuario;
+    char email[50];
+    long long cpf;
+} usuario;*/
 
 struct Data {
     int mes;
@@ -54,7 +56,7 @@ void SalvarUsuarios(usuario**usuario,int NumUsuarios){
 
     for(int i = 0; i<NumUsuarios;i++){
 
-        fprintf(arquivo, "%s %s %d %d %d\n", (*usuario)[i].nome, (*usuario)[i].email,(*usuario)[i].email, (*usuario)[i].idade, (*usuario)[i].telefone);
+        fprintf(arquivo, "%s %s %lld %d %d\n", (*usuario)[i].nome, (*usuario)[i].email,(*usuario)[i].cpf, (*usuario)[i].idade, (*usuario)[i].telefone);
 
     }
     fclose(arquivo);
@@ -72,7 +74,7 @@ void cadastrarShow(Show **shows, int *numShows) {
         *shows = realloc(*shows, (*numShows) * sizeof(Show));
 
     printf("Digite o nome do show: ");
-        canf("%s", (*shows)[*numShows - 1].nome);
+        scanf("%s", (*shows)[*numShows - 1].nome);
 
     printf("Digite a data do show: ");
         scanf("%s", (*shows)[*numShows - 1].data);
@@ -343,7 +345,7 @@ int main(){
     free(shows);
 
     //PAGAMENTO
-    int opcao;
+   
 
     printf("Menu de Pagamento:\n");
     printf("1. Cartão de Crédito\n");
