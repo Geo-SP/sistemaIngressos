@@ -1,16 +1,4 @@
 /*
-Cadastro, exclusão e atualização dos dados inseridos
-Consulta dos dados cadastrados
-
-com essas implementacoes
-Estruturas de repetição
-Funções
-Ponteiros
-Alocação dinâmica de memória
-Modularização (próximas aulas)
-Recursividade (próximas aulas)
-Leitura e gravação dos dados no disco (próximas aulas)*/ 
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -114,3 +102,5 @@ int main() {
 
     return 0;
 }
+
+*/
