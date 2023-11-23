@@ -340,7 +340,7 @@ int main(){
         char nomeUsuario[50];
         switch (opcao) {
             case 1:
-                cadastrarUsuario(&usuarios, NumUsuarios);
+                cadastrarUsuario(&usuarios, &NumUsuarios);
                 break;
             case 2:
                 printf("Digite o nome do usuário a ser excluído: ");
