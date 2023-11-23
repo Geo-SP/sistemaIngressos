@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
+#include <stddef.h>
 
 //STRUCTS
 typedef struct{
@@ -55,9 +56,9 @@ void excluirUsuario(usuario** usuario, int* NumUsuarios, const char nomeUsuario[
             }
             (*NumUsuarios)--;
             printf("Usuário %s removido com sucesso.\n", nomeUsuario);
-            return;
             // Salvar os usuários no arquivo após a exclusão
             SalvarUsuarios(usuario, *NumUsuarios);
+            return;           
         }
     }
 
@@ -257,7 +258,7 @@ void cadastrarUsuario(usuario**usuario,int*NumUsuarios){
         scanf("%d", &((*usuario)[*NumUsuarios - 1].idade));
 
     printf("digite o telefone do usuario");
-        scanf("%d", &((*usuario)[*NumUsuarios - 1].telefone[0]));
+        scanf("%lld", &((*usuario)[*NumUsuarios - 1].telefone[0]));
         SalvarUsuarios(usuario, *NumUsuarios);
 }
 void alterarUsuario(usuario* usuarios, int NumUsuarios) {
@@ -288,7 +289,7 @@ void alterarUsuario(usuario* usuarios, int NumUsuarios) {
     scanf("%d", &(usuarios[id - 1].idade));
 
     printf("Digite o novo telefone do usuário: ");
-    scanf("%d", &(usuarios[id - 1].telefone[0]));
+    scanf("%lld", &(usuarios[id - 1].telefone[0]));
     
     // Salvar as alterações no arquivo
     SalvarUsuarios(&usuarios, NumUsuarios);
@@ -404,6 +405,8 @@ int main(){
             break;
         case 3:
             coletarInfoPIX();
+            break;
+        case 0:
             break;
         default:
             printf("Opção inválida!\n");
