@@ -40,7 +40,7 @@ void SalvarUsuarios(usuario**usuario,int NumUsuarios){
 
     for(int i = 0; i<NumUsuarios;i++){
 
-        fprintf(arquivo, "%s %s %lld %d %d\n", (*usuario)[i].nome,(*usuario)[i].sexo, (*usuario)[i].email,(*usuario)[i].cpf, (*usuario)[i].idade, (*usuario)[i].telefone);
+        fprintf(arquivo, "%s %s %s %lld %d %d\n", (*usuario)[i].nome,(*usuario)[i].sexo, (*usuario)[i].email,(*usuario)[i].cpf, (*usuario)[i].idade, (*usuario)[i].telefone[0]);
 
     }
     fclose(arquivo);
@@ -56,6 +56,8 @@ void excluirUsuario(usuario** usuario, int* NumUsuarios, const char nomeUsuario[
             (*NumUsuarios)--;
             printf("Usuário %s removido com sucesso.\n", nomeUsuario);
             return;
+            // Salvar os usuários no arquivo após a exclusão
+            SalvarUsuarios(usuario, *NumUsuarios);
         }
     }
 
@@ -226,7 +228,7 @@ void coletarInfoPIX() {
 }
 
 //FUNÇÕES
-int cadastrarUsuario(usuario**usuario,int*NumUsuarios){
+void cadastrarUsuario(usuario**usuario,int*NumUsuarios){
     (*NumUsuarios)++;
     *usuario=realloc(*usuario,(*NumUsuarios)*sizeof(usuario));
 
@@ -255,7 +257,7 @@ int cadastrarUsuario(usuario**usuario,int*NumUsuarios){
         scanf("%d", &((*usuario)[*NumUsuarios - 1].idade));
 
     printf("digite o telefone do usuario");
-        scanf("%d", &((*usuario)[*NumUsuarios - 1].telefone));
+        scanf("%d", &((*usuario)[*NumUsuarios - 1].telefone[0]));
         SalvarUsuarios(usuario, *NumUsuarios);
 }
 void alterarUsuario(usuario* usuarios, int NumUsuarios) {
@@ -273,7 +275,7 @@ void alterarUsuario(usuario* usuarios, int NumUsuarios) {
 
     if (indice != -1) {
     printf("Digite o novo nome do usuário: ");
-    scanf("%s", usuarios[id - 1].nome);
+    scanf("%s", usuarios[indice].nome);
 
     printf("Digite o novo email do usuário: ");
     scanf("%s", usuarios[id - 1].email);
@@ -286,7 +288,7 @@ void alterarUsuario(usuario* usuarios, int NumUsuarios) {
     scanf("%d", &(usuarios[id - 1].idade));
 
     printf("Digite o novo telefone do usuário: ");
-    scanf("%d", &(usuarios[id - 1].telefone));
+    scanf("%d", &(usuarios[id - 1].telefone[0]));
     
     // Salvar as alterações no arquivo
     SalvarUsuarios(&usuarios, NumUsuarios);
@@ -337,13 +339,12 @@ int main(){
         char nomeUsuario[50];
         switch (opcao) {
             case 1:
-                cadastrarUsuario(&usuarios,NumUsuarios);
+                cadastrarUsuario(&usuarios, NumUsuarios);
                 break;
             case 2:
-            
                 printf("Digite o nome do usuário a ser excluído: ");
-            scanf("%s", nomeUsuario);
-            excluirUsuario(&usuarios, &NumUsuarios, nomeUsuario);
+                scanf("%s", nomeUsuario);
+                excluirUsuario(&usuarios, &NumUsuarios, nomeUsuario);
                 break;
             case 3:
                 alterarUsuario(&usuarios, NumUsuarios);
