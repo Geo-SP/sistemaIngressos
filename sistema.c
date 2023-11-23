@@ -335,7 +335,7 @@ int main(){
         printf("0. Sair\n");
 
         printf("Escolha uma opção: ");
-        printf("digite zero para sair");
+        printf("(digite zero para sair)\n");
         scanf("%d", &opcao);
         char nomeUsuario[50];
         switch (opcao) {
