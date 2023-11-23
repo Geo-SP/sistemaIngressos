@@ -23,19 +23,12 @@ typedef struct {
     int ingressosDisponiveis;
 } Show;
 
- 
-
 struct Data {
     int mes;
     int ano;
 };
 
-
 //PROCEDIMENTOS
-
-
-
-
 void SalvarUsuarios(usuario**usuario,int NumUsuarios){
     FILE*arquivo;
     arquivo = fopen("usuarios.txt","w");
@@ -69,7 +62,6 @@ void excluirUsuario(usuario** usuario, int* NumUsuarios, const char nomeUsuario[
     printf("Usuário %s não encontrado.\n", nomeUsuario);
 }
 
-
 void validarCPF(long long cpf){
     if (cpf >99999999999999LL) {
         printf("CPF inválido.\n");
@@ -81,11 +73,10 @@ void cadastrarShow(Show **shows, int *numShows) {
     (*numShows)++;
         *shows = realloc(*shows, (*numShows) * sizeof(Show));
 
-        if (*shows == NULL) {
-        printf("Erro ao alocar memória para shows.\n");
-        exit(EXIT_FAILURE);
+    if (*shows == NULL) {
+    printf("Erro ao alocar memória para shows.\n");
+    exit(EXIT_FAILURE);
     }
-
     printf("Digite o nome do show: ");
         scanf("%s", (*shows)[*numShows - 1].nome);
 
@@ -125,7 +116,8 @@ void salvarShows(Show *shows, int numShows) {
         fwrite(shows, sizeof(Show), numShows, arquivo);
 
         fclose(arquivo);
-    } else {
+    } 
+    else {
         printf("Erro ao abrir o arquivo para escrita.\n");
     }
 }
@@ -176,9 +168,6 @@ void coletarInfoCartaoCredito() {
     printf("Aguarde, processando...\n");
     pausa();
 
-    // Restante do código para processar as informações do cartão de crédito
-    // ...
-
     printf("\nDados de pagamento válidos\n");
 }
 
@@ -214,9 +203,6 @@ void coletarInfoCartaoDebito() {
     printf("Aguarde, processando...\n");
     pausa();
 
-    // Restante do código para processar as informações do cartão de débito
-    // ...
-
     printf("\nDados de pagamento válidos\n");
 }
 
@@ -239,11 +225,10 @@ void coletarInfoPIX() {
     printf("Chave PIX gerada: %s\n", chavePIX);
 }
 
-
 //FUNÇÕES
 int cadastrarUsuario(usuario**usuario,int*NumUsuarios){
     (*NumUsuarios)++;
-        *usuario=realloc(*usuario,(*NumUsuarios)*sizeof(usuario));
+    *usuario=realloc(*usuario,(*NumUsuarios)*sizeof(usuario));
 
     if(*usuario == NULL){
         printf("erro ao alocar memoria");
@@ -251,7 +236,7 @@ int cadastrarUsuario(usuario**usuario,int*NumUsuarios){
     }
 
     printf("Digite o ID do usuário: ");
-    scanf("%d", &((*usuario)[*NumUsuarios - 1].id));
+        scanf("%d", &((*usuario)[*NumUsuarios - 1].id));
 
     printf("digite o nome do usuario:");
         scanf("%s", (*usuario)[*NumUsuarios -1].nome);
@@ -287,25 +272,26 @@ void alterarUsuario(usuario* usuarios, int NumUsuarios) {
     }
 
     if (indice != -1) {
-        printf("Digite o novo nome do usuário: ");
-        scanf("%s", usuarios[id - 1].nome);
+    printf("Digite o novo nome do usuário: ");
+    scanf("%s", usuarios[id - 1].nome);
 
-        printf("Digite o novo email do usuário: ");
-        scanf("%s", usuarios[id - 1].email);
+    printf("Digite o novo email do usuário: ");
+    scanf("%s", usuarios[id - 1].email);
 
-        printf("Digite o novo CPF do usuário: ");
-        scanf("%lld", &(usuarios[id - 1].cpf));
-        validarCPF(usuarios[id - 1].cpf);
+    printf("Digite o novo CPF do usuário: ");
+    scanf("%lld", &(usuarios[id - 1].cpf));
+    validarCPF(usuarios[id - 1].cpf);
 
-        printf("Digite a nova idade do usuário: ");
-        scanf("%d", &(usuarios[id - 1].idade));
+    printf("Digite a nova idade do usuário: ");
+    scanf("%d", &(usuarios[id - 1].idade));
 
-        printf("Digite o novo telefone do usuário: ");
-        scanf("%d", &(usuarios[id - 1].telefone));
-
-        // Salvar as alterações no arquivo
-        SalvarUsuarios(&usuarios, NumUsuarios);
-    } else {
+    printf("Digite o novo telefone do usuário: ");
+    scanf("%d", &(usuarios[id - 1].telefone));
+    
+    // Salvar as alterações no arquivo
+    SalvarUsuarios(&usuarios, NumUsuarios);
+    } 
+    else{
         printf("ID de usuário inválido.\n");
     }
 }
@@ -323,7 +309,8 @@ Show* carregarShows(int *numShows) {
         fclose(arquivo);
 
         return shows;
-    } else {
+    } 
+    else{
         printf("Erro ao abrir o arquivo para leitura.\n");
         return NULL;
     }
@@ -399,7 +386,6 @@ int main(){
     free(shows);
 
     //PAGAMENTO
-   
 
     printf("Menu de Pagamento:\n");
     printf("1. Cartão de Crédito\n");
@@ -425,5 +411,3 @@ int main(){
 
     return 0;
 }
-
-//ESCOLHA SHOW
