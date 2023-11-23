@@ -261,10 +261,11 @@ void cadastrarUsuario(usuario**usuario,int*NumUsuarios){
         scanf("%lld", &((*usuario)[*NumUsuarios - 1].telefone[0]));
         SalvarUsuarios(usuario, *NumUsuarios);
 }
+//erro na validação de ID 
 void alterarUsuario(usuario* usuarios, int NumUsuarios) {
     int id;
     printf("Digite o ID do usuário que deseja alterar: ");
-    scanf("%d", &id);
+    scanf("%d\n", &id);
 
     int indice = -1;
     for (int i = 0; i < NumUsuarios; i++) {
