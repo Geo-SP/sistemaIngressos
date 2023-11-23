@@ -54,13 +54,13 @@ void SalvarUsuarios(usuario**usuario,int NumUsuarios){
 }
 
 void excluirUsuario(usuario** usuario, int* NumUsuarios, const char nomeUsuario[]) {
-    for (int i = 0; i < NumUsuarios; i++) {
-        if (strcmp((usuario)[i].nome, nomeUsuario) == 0) {
+    for (int i = 0; i < *NumUsuarios; i++) {
+        if (strcmp((*usuario)[i].nome, nomeUsuario) == 0) {
             // Remover o usuário da lista de usuários
-            for (int j = i; j < NumUsuarios - 1; j++) {
-                (usuario)[j] = (usuario)[j + 1];
+            for (int j = i; j < *NumUsuarios - 1; j++) {
+                (*usuario)[j] = (*usuario)[j + 1];
             }
-            (NumUsuarios)--;
+            (*NumUsuarios)--;
             printf("Usuário %s removido com sucesso.\n", nomeUsuario);
             return;
         }
@@ -68,6 +68,7 @@ void excluirUsuario(usuario** usuario, int* NumUsuarios, const char nomeUsuario[
 
     printf("Usuário %s não encontrado.\n", nomeUsuario);
 }
+
 
 void validarCPF(long long cpf){
     if (cpf >99999999999999LL) {
@@ -346,13 +347,16 @@ int main(){
         printf("Escolha uma opção: ");
         printf("digite zero para sair");
         scanf("%d", &opcao);
-
+        char nomeUsuario[50];
         switch (opcao) {
             case 1:
-                cadastrarUsuario(&usuarios,&NumUsuarios);
+                cadastrarUsuario(&usuarios,NumUsuarios);
                 break;
             case 2:
-                excluirUsuario(&listaDeUsuarios, &numeroDeUsuarios, nomeUsuario);
+            
+                printf("Digite o nome do usuário a ser excluído: ");
+            scanf("%s", nomeUsuario);
+            excluirUsuario(&usuarios, &NumUsuarios, nomeUsuario);
                 break;
             case 3:
                 alterarUsuario(&usuarios, NumUsuarios);
