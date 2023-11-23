@@ -352,7 +352,7 @@ int main(){
                 cadastrarUsuario(&usuarios,&NumUsuarios);
                 break;
             case 2:
-                SalvarUsuarios(&usuarios, NumUsuarios);
+                excluirUsuario(&listaDeUsuarios, &numeroDeUsuarios, nomeUsuario);
                 break;
             case 3:
                 alterarUsuario(&usuarios, NumUsuarios);
