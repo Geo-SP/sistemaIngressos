@@ -32,6 +32,10 @@ struct Data {
 
 
 //PROCEDIMENTOS
+
+
+
+
 void SalvarUsuarios(usuario**usuario,int NumUsuarios){
     FILE*arquivo;
     arquivo = fopen("usuarios.txt","w");
@@ -47,6 +51,22 @@ void SalvarUsuarios(usuario**usuario,int NumUsuarios){
 
     }
     fclose(arquivo);
+}
+
+void excluirUsuario(usuario** usuario, int* NumUsuarios, const char nomeUsuario[]) {
+    for (int i = 0; i < NumUsuarios; i++) {
+        if (strcmp((usuario)[i].nome, nomeUsuario) == 0) {
+            // Remover o usuário da lista de usuários
+            for (int j = i; j < NumUsuarios - 1; j++) {
+                (usuario)[j] = (usuario)[j + 1];
+            }
+            (NumUsuarios)--;
+            printf("Usuário %s removido com sucesso.\n", nomeUsuario);
+            return;
+        }
+    }
+
+    printf("Usuário %s não encontrado.\n", nomeUsuario);
 }
 
 void validarCPF(long long cpf){
