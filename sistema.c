@@ -6,11 +6,13 @@
 
 //STRUCTS
 typedef struct{
+    int id;
     char nome[50];
+    char sexo[10];
     char email[50];
     long long cpf;
     int idade;
-    int telefone;
+    int telefone[11];
 }usuario;
 
 typedef struct {
@@ -21,22 +23,7 @@ typedef struct {
     int ingressosDisponiveis;
 } Show;
 
-typedef struct show
-{
-    int idBanda;
-    char nome[100];
-    char data[20];
-    float preco;
-}show;
-
-/*typedef struct {
-    char nome[30];
-    char sexo[10];
-    char idade[5];
-    int telefone[11];
-    char email[50];
-    long long cpf;
-} usuario;*/
+ 
 
 struct Data {
     int mes;
@@ -56,7 +43,7 @@ void SalvarUsuarios(usuario**usuario,int NumUsuarios){
 
     for(int i = 0; i<NumUsuarios;i++){
 
-        fprintf(arquivo, "%s %s %lld %d %d\n", (*usuario)[i].nome, (*usuario)[i].email,(*usuario)[i].cpf, (*usuario)[i].idade, (*usuario)[i].telefone);
+        fprintf(arquivo, "%s %s %lld %d %d\n", (*usuario)[i].nome,(*usuario)[i].sexo, (*usuario)[i].email,(*usuario)[i].cpf, (*usuario)[i].idade, (*usuario)[i].telefone);
 
     }
     fclose(arquivo);
@@ -72,6 +59,11 @@ void validarCPF(long long cpf){
 void cadastrarShow(Show **shows, int *numShows) {
     (*numShows)++;
         *shows = realloc(*shows, (*numShows) * sizeof(Show));
+
+        if (*shows == NULL) {
+        printf("Erro ao alocar memória para shows.\n");
+        exit(EXIT_FAILURE);
+    }
 
     printf("Digite o nome do show: ");
         scanf("%s", (*shows)[*numShows - 1].nome);
@@ -236,8 +228,15 @@ int cadastrarUsuario(usuario**usuario,int*NumUsuarios){
         printf("erro ao alocar memoria");
         exit(EXIT_FAILURE);
     }
+
+    printf("Digite o ID do usuário: ");
+    scanf("%d", &((*usuario)[*NumUsuarios - 1].id));
+
     printf("digite o nome do usuario:");
         scanf("%s", (*usuario)[*NumUsuarios -1].nome);
+
+    printf("digite o nome do usuario:");
+        scanf("%s", (*usuario)[*NumUsuarios -1].sexo);
 
     printf("digite o email do usuario: ");
         scanf("%s", (*usuario)[*NumUsuarios - 1].email);
@@ -252,6 +251,42 @@ int cadastrarUsuario(usuario**usuario,int*NumUsuarios){
     printf("digite o telefone do usuario");
         scanf("%d", &((*usuario)[*NumUsuarios - 1].telefone));
         SalvarUsuarios(usuario, *NumUsuarios);
+}
+void alterarUsuario(usuario* usuarios, int NumUsuarios) {
+    int id;
+    printf("Digite o ID do usuário que deseja alterar: ");
+    scanf("%d", &id);
+
+    int indice = -1;
+    for (int i = 0; i < NumUsuarios; i++) {
+        if (usuarios[i].id == id) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice != -1) {
+        printf("Digite o novo nome do usuário: ");
+        scanf("%s", usuarios[id - 1].nome);
+
+        printf("Digite o novo email do usuário: ");
+        scanf("%s", usuarios[id - 1].email);
+
+        printf("Digite o novo CPF do usuário: ");
+        scanf("%lld", &(usuarios[id - 1].cpf));
+        validarCPF(usuarios[id - 1].cpf);
+
+        printf("Digite a nova idade do usuário: ");
+        scanf("%d", &(usuarios[id - 1].idade));
+
+        printf("Digite o novo telefone do usuário: ");
+        scanf("%d", &(usuarios[id - 1].telefone));
+
+        // Salvar as alterações no arquivo
+        SalvarUsuarios(&usuarios, NumUsuarios);
+    } else {
+        printf("ID de usuário inválido.\n");
+    }
 }
 
 // Função para carregar os shows do disco
@@ -277,7 +312,6 @@ int main(){
 
     usuario* usuarios = NULL;
     int NumUsuarios = 0;
-    int opção;
     Show *shows = NULL;
     int numShows = 0;
     int opcao;
@@ -287,14 +321,13 @@ int main(){
         printf("\n1. Cadastrar usuario\n");
         printf("2. Excluir usuario\n");
         printf("3. alterar dados\n");
-        printf("4. consultar dados\n");
         printf("0. Sair\n");
 
         printf("Escolha uma opção: ");
         printf("digite zero para sair");
-        scanf("%d", &opção);
+        scanf("%d", &opcao);
 
-        switch (opção) {
+        switch (opcao) {
             case 1:
                 cadastrarUsuario(&usuarios,&NumUsuarios);
                 break;
@@ -302,14 +335,11 @@ int main(){
                 SalvarUsuarios(&usuarios, NumUsuarios);
                 break;
             case 3:
-                excluirShow();
-                break;
-            case 4:
-                atualizarShow();
+                alterarUsuario(&usuarios, NumUsuarios);
                 break;
         }
 
-    } while (opção != 0);
+    } while (opcao!= 0);
 
     free(usuarios);
 
