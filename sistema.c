@@ -11,7 +11,7 @@ typedef struct{
     char nome[50];
     char sexo[10];
     char email[50];
-    long long cpf;
+    int cpf;
     int idade;
     int telefone[11];
 }usuario;
@@ -41,7 +41,7 @@ void SalvarUsuarios(usuario**usuario,int NumUsuarios){
 
     for(int i = 0; i<NumUsuarios;i++){
 
-        fprintf(arquivo, "%s %s %s %lld %d %d\n", (*usuario)[i].nome,(*usuario)[i].sexo, (*usuario)[i].email,(*usuario)[i].cpf, (*usuario)[i].idade, (*usuario)[i].telefone[0]);
+        fprintf(arquivo, "%s %s %s %d %d %d\n", (*usuario)[i].nome,(*usuario)[i].sexo, (*usuario)[i].email,(*usuario)[i].cpf, (*usuario)[i].idade, (*usuario)[i].telefone[0]);
 
     }
     fclose(arquivo);
@@ -241,25 +241,27 @@ void cadastrarUsuario(usuario**usuario,int*NumUsuarios){
     printf("Digite o ID do usuário: ");
         scanf("%d", &((*usuario)[*NumUsuarios - 1].id));
 
-    printf("digite o nome do usuario:");
+    printf("Digite o nome do usuario: ");
         scanf("%s", (*usuario)[*NumUsuarios -1].nome);
 
-    printf("digite o nome do usuario:");
+    printf("Digite seu sexo:");
         scanf("%s", (*usuario)[*NumUsuarios -1].sexo);
 
-    printf("digite o email do usuario: ");
+    printf("Digite o email do usuario: ");
         scanf("%s", (*usuario)[*NumUsuarios - 1].email);
 
-    printf("digite o cpf do usuario: ");
-        scanf("%lld", &((*usuario)[*NumUsuarios - 1].cpf));
+    printf("Digite o CPF do usuario: ");
+        scanf("%d", &((*usuario)[*NumUsuarios - 1].cpf));
         validarCPF((*usuario)[*NumUsuarios - 1].cpf);
 
-    printf("digite a idade do usuario");
+    printf("Digite a idade do usuario: ");
         scanf("%d", &((*usuario)[*NumUsuarios - 1].idade));
 
-    printf("digite o telefone do usuario");
-        scanf("%lld", &((*usuario)[*NumUsuarios - 1].telefone[0]));
+    printf("Digite o telefone do usuario: ");
+        scanf("%d", &((*usuario)[*NumUsuarios - 1].telefone[0]));
         SalvarUsuarios(usuario, *NumUsuarios);
+
+        printf("\n Usuário Cadastrado com sucesso\n"); 
 }
 //erro na validação de ID 
 void alterarUsuario(usuario* usuarios, int NumUsuarios) {
@@ -269,28 +271,28 @@ void alterarUsuario(usuario* usuarios, int NumUsuarios) {
 
     int indice = -1;
     for (int i = 0; i < NumUsuarios; i++) {
-        if (usuarios[i].id == id) {
+        if (usuarios[i].id != id) {
             indice = i;
+            printf("Id de usuário incorreto"); 
             break;
         }
     }
-
     if (indice != -1) {
     printf("Digite o novo nome do usuário: ");
-    scanf("%s", usuarios[indice].nome);
+    scanf("%s\n", usuarios[indice].nome);
 
     printf("Digite o novo email do usuário: ");
-    scanf("%s", usuarios[id - 1].email);
+    scanf("%s\n", usuarios[id - 1].email);
 
     printf("Digite o novo CPF do usuário: ");
-    scanf("%lld", &(usuarios[id - 1].cpf));
+    scanf("%d\n", &(usuarios[id - 1].cpf));
     validarCPF(usuarios[id - 1].cpf);
 
     printf("Digite a nova idade do usuário: ");
-    scanf("%d", &(usuarios[id - 1].idade));
+    scanf("%d\n", &(usuarios[id - 1].idade));
 
     printf("Digite o novo telefone do usuário: ");
-    scanf("%lld", &(usuarios[id - 1].telefone[0]));
+    scanf("%d\n", &(usuarios[id - 1].telefone[0]));
     
     // Salvar as alterações no arquivo
     SalvarUsuarios(&usuarios, NumUsuarios);
@@ -349,7 +351,7 @@ int main(){
                 excluirUsuario(&usuarios, &NumUsuarios, nomeUsuario);
                 break;
             case 3:
-                alterarUsuario(&usuarios, NumUsuarios);
+                alterarUsuario(usuarios, NumUsuarios);
                 break;
         }
 
