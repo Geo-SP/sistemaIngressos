@@ -6,22 +6,11 @@
 #include <stddef.h>
 
 
-
-//Declaração da estrutura do Show
-typedef struct {
-    int id;
-    char nome[50];
-    char data[20];
-    float preco;
-    int ingressosDisponiveis;
-} Show;
-
 typedef struct {
     int mes;
     int ano;
 } Data;
 
-//Declaração da estrtutura do usuario
 typedef struct {
     int id;
     char nome[50];
@@ -32,13 +21,41 @@ typedef struct {
     int telefone[11];
 } usuario;
 
+typedef struct {
+    int id;
+    char nome[50];
+    char data[20];
+    float preco;
+    int ingressosDisponiveis;
+} Show;
+
+//Declaração da estrtutura do usuario
+
 //Prototipo de funções
-void excluirUsuario(usuario **usuarios, int *numUsuarios, const char *nomeUsuario);
-void alterarUsuario(usuario **usuarios, int numUsuarios);
+void excluirUsuario(usuario *usuarios, int *numUsuarios, const char *nomeUsuario);
+void alterarUsuario(usuario *usuarios, int numUsuarios);
 void cadastrarUsuario(usuario **usuarios, int *numUsuarios);
+void SalvarUsuarios(usuario *usuarios, int NumUsuarios);
 void menuShows(Show **shows, int *numShows);
 void cadastrarShow(Show **shows, int *numShows);
-Show* carregarShows(int *numShows);
+Show *carregarShows(int *numShows);
+void exibirShow(Show show);
+void listarShows(Show *shows, int numShows);
+void salvarShows(Show *shows, int numShows);
+void menuPagamento();
+void coletarInfoCartaoCredito();
+void coletarInfoCartaoDebito();
+void gerarChavePIX(char *chavePix);
+void coletarInfoPIX();
+void pausa();
+
+//Função para validar CPF
+void validarCPF(long long cpf) {
+    if (cpf > 99999999999999LL) {
+        printf("CPF inválido.\n");
+        exit(EXIT_FAILURE);
+    }
+}
 
 // Declaração da função exibirShow
 void exibirShow(Show show) {
@@ -49,8 +66,121 @@ void exibirShow(Show show) {
     printf("Ingressos disponíveis: %d\n", show.ingressosDisponiveis);
     printf("----------------------------\n");
 }
-void menuCadastro(usuario **usuarios, int *numUsuarios){
-     int opcao;
+// Implementação da função cadastrarUsuario
+void cadastrarUsuario(usuario **usuarios, int *numUsuarios) {
+    static int contadorID = 1;
+    (*numUsuarios)++;
+    *usuarios = realloc(*usuarios, (*numUsuarios) * sizeof(usuario));
+
+    if (*usuarios == NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    (*usuarios)[*numUsuarios - 1].id = contadorID++;
+
+    printf("Digite o nome do usuário: ");
+    scanf("%s", (*usuarios)[*numUsuarios - 1].nome);
+
+    printf("Digite seu sexo:");
+        scanf("%s", (*usuarios)[*numUsuarios -1].sexo);
+
+    printf("Digite o email do usuario: ");
+        scanf("%s", (*usuarios)[*numUsuarios - 1].email);
+
+    printf("Digite o CPF do usuario: ");
+        scanf("%d", &((*usuarios)[*numUsuarios - 1].cpf));
+        validarCPF((*usuarios)[*numUsuarios - 1].cpf);
+
+    printf("Digite a idade do usuario: ");
+        scanf("%d", &((*usuarios)[*numUsuarios - 1].idade));
+
+    printf("Digite o telefone do usuario: ");
+        scanf("%d", &((*usuarios)[*numUsuarios - 1].telefone[0]));
+    printf("\nUsuário cadastrado com sucesso.\n");
+}
+
+void alterarUsuario(usuario *usuarios, int numUsuarios) {
+    char nomeUsuario[50];
+
+    printf("Digite o nome do usuário a ser alterado: ");
+    scanf("%s", nomeUsuario);
+
+    int encontrado = 0;
+
+    for (int i = 0; i < numUsuarios; ++i) {
+        if (strcmp(usuarios[i].nome, nomeUsuario) == 0) {
+            printf("Usuário encontrado. Insira as novas informações:\n");
+
+            printf("Digite o novo nome do usuário: ");
+            scanf("%s", usuarios[i].nome);
+
+            printf("Digite o novo sexo do usuário: ");
+            scanf("%s", usuarios[i].sexo);
+
+            printf("Digite o novo email do usuário: ");
+            scanf("%s", usuarios[i].email);
+
+            printf("Digite o novo CPF do usuário: ");
+            scanf("%d", &usuarios[i].cpf);
+            validarCPF(usuarios[i].cpf);
+
+            printf("Digite a nova idade do usuário: ");
+            scanf("%d", &usuarios[i].idade);
+
+            printf("Digite o novo telefone do usuário: ");
+            scanf("%d", &usuarios[i].telefone[0]);
+
+            printf("\nUsuário alterado com sucesso.\n");
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Usuário %s não encontrado.\n", nomeUsuario);
+    }
+}
+
+
+void excluirUsuario(usuario *usuarios, int *numUsuarios, const char *nomeUsuario) {
+    for (int i = 0; i < *numUsuarios; ++i) {
+        if (strcmp(usuarios[i].nome, nomeUsuario) == 0) {
+            // Marcar o usuário como removido
+            usuarios[i].nome[0] = '\0';
+            printf("Usuário %s removido com sucesso.\n", nomeUsuario);
+            return;
+        }
+    }
+
+    printf("Usuário %s não encontrado.\n", nomeUsuario);
+}
+
+
+void SalvarUsuarios(usuario *usuarios, int NumUsuarios) {
+    FILE *arquivo;
+    arquivo = fopen("usuarios.txt", "w");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir um arquivo");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < NumUsuarios; i++) {
+        fprintf(arquivo, "%s %s %s %d %d", usuarios[i].nome, usuarios[i].sexo, usuarios[i].email,
+                usuarios[i].cpf, usuarios[i].idade);
+
+        // Iterar pelos elementos da matriz de telefone
+        for (int j = 0; j < 11; j++) {
+            fprintf(arquivo, " %d", usuarios[i].telefone[j]);
+        }
+
+        fprintf(arquivo, "\n");
+    }
+    fclose(arquivo);
+}
+void menuCadastro(usuario **usuarios, int *numUsuarios) {
+    int opcao;
 
     do {
         printf("\n1. Cadastrar usuário\n");
@@ -79,57 +209,6 @@ void menuCadastro(usuario **usuarios, int *numUsuarios){
     } while (opcao != 0);
 }
 
-
-void SalvarUsuarios(usuario** usuarios, int NumUsuarios) {
-    FILE* arquivo;
-    arquivo = fopen("usuarios.txt", "w");
-
-    if (arquivo == NULL) {
-        printf("Erro ao abrir um arquivo");
-        exit(EXIT_FAILURE);
-    }
-
-    for (int i = 0; i < NumUsuarios; i++) {
-        fprintf(arquivo, "%s %s %s %d %d %d\n", (*usuarios)[i].nome, (*usuarios)[i].sexo, (*usuarios)[i].email,
-                (*usuarios)[i].cpf, (*usuarios)[i].idade, (*usuarios)[i].telefone[0]);
-    }
-    fclose(arquivo);
-}
-
-void cadastrarUsuario(usuario** usuarios, int* NumUsuarios) {
-    static int contadorID = 1;  // Variável estática para contar os IDs
-    (*NumUsuarios)++;
-    *usuarios = realloc(*usuarios, (*NumUsuarios) * sizeof(usuario));
-
-    if (*usuarios == NULL) {
-        printf("Erro ao alocar memória.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    (*usuarios)[*NumUsuarios - 1].id = contadorID++;  // Atribuir e incrementar o ID automaticamente
-
-    printf("Digite o nome do usuario: ");
-    scanf("%s", (*usuarios)[*NumUsuarios - 1].nome);
-
-    printf("Digite seu sexo:");
-    scanf("%s", (*usuarios)[*NumUsuarios - 1].sexo);
-
-    printf("Digite o email do usuario: ");
-    scanf("%s", (*usuarios)[*NumUsuarios - 1].email);
-
-    printf("Digite o CPF do usuario: ");
-    scanf("%d", &((*usuarios)[*NumUsuarios - 1].cpf));
-
-    printf("Digite a idade do usuario: ");
-    scanf("%d", &((*usuarios)[*NumUsuarios - 1].idade));
-
-    printf("Digite o telefone do usuario: ");
-    scanf("%d", &((*usuarios)[*NumUsuarios - 1].telefone[0]));
-
-    SalvarUsuarios(usuarios, *NumUsuarios);
-
-    printf("\n Usuário Cadastrado com sucesso\n");
-}
 void cadastrarShow(Show** shows, int *numShows) {
     (*numShows)++;
     *shows = realloc(*shows, (*numShows) * sizeof(Show));
@@ -351,7 +430,7 @@ void menuShows(Show **shows, int *numShows) {
                 break;
             case 4:
                 free(*shows);
-                *shows = carregarShows(*numShows);
+                *shows = carregarShows(numShows);
                 break;
             case 5:
                 menuPagamento();
@@ -360,26 +439,20 @@ void menuShows(Show **shows, int *numShows) {
 
     } while (opcao != 0);
 }
-//Função para validar CPF
-void validarCPF(long long cpf) {
-    if (cpf > 99999999999999LL) {
-        printf("CPF inválido.\n");
-        exit(EXIT_FAILURE);
-    }
-}
+
 
 
 int main() {
-    usuario* usuarios = NULL;
-    int numUsuarios = 0;
-    Show* shows = NULL;
+        int numUsuarios = 0;
+    usuario *usuarios = NULL;
+    Show *shows = NULL;
     int numShows = 0;
     int opcao;
 
     do {
         printf("\n1. Menu de Cadastro\n");
         printf("2. Menu de Shows\n");
-        printf("3.Menu Pagamento\n");
+        printf("3. Menu Pagamento\n");
         printf("0. Sair\n");
 
         printf("Escolha uma opção: ");
@@ -392,17 +465,13 @@ int main() {
             case 2:
                 menuShows(&shows, &numShows);
                 break;
-            case 3: 
+            case 3:
                 menuPagamento();
                 break;
         }
 
     } while (opcao != 0);
-    shows = carregarShows(&numShows);
-   
 
-    cadastrarUsuario(&usuarios, &numUsuarios);
-   
     // Liberar a memória no final do programa
     free(usuarios);
     free(shows);
