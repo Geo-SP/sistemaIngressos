@@ -113,23 +113,23 @@ void alterarUsuario(usuario *usuarios, int numUsuarios) {
             printf("Usuário encontrado. Insira as novas informações:\n");
 
             printf("Digite o novo nome do usuário: ");
-            scanf("%s", usuarios[i].nome);
+            scanf("%s ", usuarios[i].nome);
 
             printf("Digite o novo sexo do usuário: ");
-            scanf("%s", usuarios[i].sexo);
+            scanf("%s ", usuarios[i].sexo);
 
             printf("Digite o novo email do usuário: ");
-            scanf("%s", usuarios[i].email);
+            scanf("%s ", usuarios[i].email);
 
             printf("Digite o novo CPF do usuário: ");
-            scanf("%d", &usuarios[i].cpf);
+            scanf("%d ", &usuarios[i].cpf);
             validarCPF(usuarios[i].cpf);
 
             printf("Digite a nova idade do usuário: ");
-            scanf("%d", &usuarios[i].idade);
+            scanf("%d ", &usuarios[i].idade);
 
             printf("Digite o novo telefone do usuário: ");
-            scanf("%d", &usuarios[i].telefone[0]);
+            scanf("%d ", &usuarios[i].telefone[0]);
 
             printf("\nUsuário alterado com sucesso.\n");
             encontrado = 1;
