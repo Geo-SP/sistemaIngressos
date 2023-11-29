@@ -16,9 +16,9 @@ typedef struct {
     char nome[50];
     char sexo[10];
     char email[50];
-    int cpf;
+    char cpf;
     int idade;
-    int telefone[11];
+    char telefone[11];
 } usuario;
 
 typedef struct {
@@ -89,14 +89,14 @@ void cadastrarUsuario(usuario **usuarios, int *numUsuarios) {
         scanf("%s", (*usuarios)[*numUsuarios - 1].email);
 
     printf("Digite o CPF do usuario: ");
-        scanf("%d", &((*usuarios)[*numUsuarios - 1].cpf));
+        scanf("%s", &((*usuarios)[*numUsuarios - 1].cpf));
         validarCPF((*usuarios)[*numUsuarios - 1].cpf);
 
     printf("Digite a idade do usuario: ");
         scanf("%d", &((*usuarios)[*numUsuarios - 1].idade));
 
     printf("Digite o telefone do usuario: ");
-        scanf("%d", &((*usuarios)[*numUsuarios - 1].telefone[0]));
+        scanf("%s", &((*usuarios)[*numUsuarios - 1].telefone[0]));
     printf("\nUsuário cadastrado com sucesso.\n");
 }
 
@@ -122,14 +122,14 @@ void alterarUsuario(usuario *usuarios, int numUsuarios) {
             scanf("%s ", usuarios[i].email);
 
             printf("Digite o novo CPF do usuário: ");
-            scanf("%d ", &usuarios[i].cpf);
+            scanf("%s ", &usuarios[i].cpf);
             validarCPF(usuarios[i].cpf);
 
             printf("Digite a nova idade do usuário: ");
             scanf("%d ", &usuarios[i].idade);
 
             printf("Digite o novo telefone do usuário: ");
-            scanf("%d ", &usuarios[i].telefone[0]);
+            scanf("%s ", &usuarios[i].telefone[0]);
 
             printf("\nUsuário alterado com sucesso.\n");
             encontrado = 1;
