@@ -5,13 +5,14 @@
 #include <time.h>
 #include <stddef.h>
 
-
-typedef struct {
+typedef struct
+{
     int mes;
     int ano;
 } Data;
 
-typedef struct {
+typedef struct
+{
     int id;
     char nome[50];
     char sexo[10];
@@ -21,7 +22,8 @@ typedef struct {
     char telefone[11];
 } usuario;
 
-typedef struct {
+typedef struct
+{
     int id;
     char nome[50];
     char data[20];
@@ -29,9 +31,9 @@ typedef struct {
     int ingressosDisponiveis;
 } Show;
 
-//Declaração da estrtutura do usuario
+// Declaração da estrtutura do usuario
 
-//Prototipo de funções
+// Prototipo de funções
 void excluirUsuario(usuario *usuarios, int *numUsuarios, const char *nomeUsuario);
 void alterarUsuario(usuario *usuarios, int numUsuarios);
 void cadastrarUsuario(usuario **usuarios, int *numUsuarios);
@@ -49,16 +51,19 @@ void gerarChavePIX(char *chavePix);
 void coletarInfoPIX();
 void pausa();
 
-//Função para validar CPF
-void validarCPF(long long cpf) {
-    if (cpf > 99999999999999LL) {
+// Função para validar CPF
+void validarCPF(long long cpf)
+{
+    if (cpf > 99999999999999LL)
+    {
         printf("CPF inválido.\n");
         exit(EXIT_FAILURE);
     }
 }
 
 // Declaração da função exibirShow
-void exibirShow(Show show) {
+void exibirShow(Show show)
+{
     printf("ID: %d\n", show.id);
     printf("Nome: %s\n", show.nome);
     printf("Data: %s\n", show.data);
@@ -67,12 +72,14 @@ void exibirShow(Show show) {
     printf("----------------------------\n");
 }
 // Implementação da função cadastrarUsuario
-void cadastrarUsuario(usuario **usuarios, int *numUsuarios) {
+void cadastrarUsuario(usuario **usuarios, int *numUsuarios)
+{
     static int contadorID = 1;
     (*numUsuarios)++;
     *usuarios = realloc(*usuarios, (*numUsuarios) * sizeof(usuario));
 
-    if (*usuarios == NULL) {
+    if (*usuarios == NULL)
+    {
         printf("Erro ao alocar memória.\n");
         exit(EXIT_FAILURE);
     }
@@ -83,24 +90,25 @@ void cadastrarUsuario(usuario **usuarios, int *numUsuarios) {
     scanf("%s", (*usuarios)[*numUsuarios - 1].nome);
 
     printf("Digite seu sexo:");
-        scanf("%s", (*usuarios)[*numUsuarios -1].sexo);
+    scanf("%s", (*usuarios)[*numUsuarios - 1].sexo);
 
     printf("Digite o email do usuario: ");
-        scanf("%s", (*usuarios)[*numUsuarios - 1].email);
+    scanf("%s", (*usuarios)[*numUsuarios - 1].email);
 
     printf("Digite o CPF do usuario: ");
-        scanf("%s", &((*usuarios)[*numUsuarios - 1].cpf));
-        validarCPF((*usuarios)[*numUsuarios - 1].cpf);
+    scanf("%s", &((*usuarios)[*numUsuarios - 1].cpf));
+    validarCPF((*usuarios)[*numUsuarios - 1].cpf);
 
     printf("Digite a idade do usuario: ");
-        scanf("%d", &((*usuarios)[*numUsuarios - 1].idade));
+    scanf("%d", &((*usuarios)[*numUsuarios - 1].idade));
 
     printf("Digite o telefone do usuario: ");
-        scanf("%s", &((*usuarios)[*numUsuarios - 1].telefone[0]));
+    scanf("%s", &((*usuarios)[*numUsuarios - 1].telefone[0]));
     printf("\nUsuário cadastrado com sucesso.\n");
 }
 
-void alterarUsuario(usuario *usuarios, int numUsuarios) {
+void alterarUsuario(usuario *usuarios, int numUsuarios)
+{
     char nomeUsuario[50];
 
     printf("Digite o nome do usuário a ser alterado: ");
@@ -108,28 +116,36 @@ void alterarUsuario(usuario *usuarios, int numUsuarios) {
 
     int encontrado = 0;
 
-    for (int i = 0; i < numUsuarios; ++i) {
-        if (strcmp(usuarios[i].nome, nomeUsuario) == 0) {
+    for (int i = 0; i < numUsuarios; ++i)
+    {
+        if (strcmp(usuarios[i].nome, nomeUsuario) == 0)
+        {
             printf("Usuário encontrado. Insira as novas informações:\n");
 
             printf("Digite o novo nome do usuário: ");
-            scanf("%s ", usuarios[i].nome);
+            scanf(" %s", usuarios[i].nome);
+            getchar();
 
             printf("Digite o novo sexo do usuário: ");
-            scanf("%s ", usuarios[i].sexo);
+            scanf(" %s", usuarios[i].sexo);
+            getchar();
 
             printf("Digite o novo email do usuário: ");
-            scanf("%s ", usuarios[i].email);
+            scanf(" %s", usuarios[i].email);
+            getchar();
 
             printf("Digite o novo CPF do usuário: ");
-            scanf("%s ", &usuarios[i].cpf);
+            scanf(" %s", &usuarios[i].cpf);
             validarCPF(usuarios[i].cpf);
+            getchar();
 
             printf("Digite a nova idade do usuário: ");
-            scanf("%d ", &usuarios[i].idade);
+            scanf("%d", &usuarios[i].idade);
+            getchar();
 
             printf("Digite o novo telefone do usuário: ");
-            scanf("%s ", &usuarios[i].telefone[0]);
+            scanf(" %s", &usuarios[i].telefone[0]);
+            getchar();
 
             printf("\nUsuário alterado com sucesso.\n");
             encontrado = 1;
@@ -137,15 +153,18 @@ void alterarUsuario(usuario *usuarios, int numUsuarios) {
         }
     }
 
-    if (!encontrado) {
+    if (!encontrado)
+    {
         printf("Usuário %s não encontrado.\n", nomeUsuario);
     }
 }
 
-
-void excluirUsuario(usuario *usuarios, int *numUsuarios, const char *nomeUsuario) {
-    for (int i = 0; i < *numUsuarios; ++i) {
-        if (strcmp(usuarios[i].nome, nomeUsuario) == 0) {
+void excluirUsuario(usuario *usuarios, int *numUsuarios, const char *nomeUsuario)
+{
+    for (int i = 0; i < *numUsuarios; ++i)
+    {
+        if (strcmp(usuarios[i].nome, nomeUsuario) == 0)
+        {
             // Marcar o usuário como removido
             usuarios[i].nome[0] = '\0';
             printf("Usuário %s removido com sucesso.\n", nomeUsuario);
@@ -156,22 +175,25 @@ void excluirUsuario(usuario *usuarios, int *numUsuarios, const char *nomeUsuario
     printf("Usuário %s não encontrado.\n", nomeUsuario);
 }
 
-
-void SalvarUsuarios(usuario *usuarios, int NumUsuarios) {
+void SalvarUsuarios(usuario *usuarios, int NumUsuarios)
+{
     FILE *arquivo;
     arquivo = fopen("usuarios.txt", "w");
 
-    if (arquivo == NULL) {
+    if (arquivo == NULL)
+    {
         printf("Erro ao abrir um arquivo");
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < NumUsuarios; i++) {
+    for (int i = 0; i < NumUsuarios; i++)
+    {
         fprintf(arquivo, "%s %s %s %d %d", usuarios[i].nome, usuarios[i].sexo, usuarios[i].email,
                 usuarios[i].cpf, usuarios[i].idade);
 
         // Iterar pelos elementos da matriz de telefone
-        for (int j = 0; j < 11; j++) {
+        for (int j = 0; j < 11; j++)
+        {
             fprintf(arquivo, " %d", usuarios[i].telefone[j]);
         }
 
@@ -179,10 +201,12 @@ void SalvarUsuarios(usuario *usuarios, int NumUsuarios) {
     }
     fclose(arquivo);
 }
-void menuCadastro(usuario **usuarios, int *numUsuarios) {
+void menuCadastro(usuario **usuarios, int *numUsuarios)
+{
     int opcao;
 
-    do {
+    do
+    {
         printf("\n1. Cadastrar usuário\n");
         printf("2. Excluir usuário\n");
         printf("3. Alterar dados\n");
@@ -192,28 +216,31 @@ void menuCadastro(usuario **usuarios, int *numUsuarios) {
         scanf("%d", &opcao);
         char nomeUsuario[50];
 
-        switch (opcao) {
-            case 1:
-                cadastrarUsuario(usuarios, numUsuarios);
-                break;
-            case 2:
-                printf("Digite o nome do usuário a ser excluído: ");
-                scanf("%s", nomeUsuario);
-                excluirUsuario(*usuarios, numUsuarios, nomeUsuario);
-                break;
-            case 3:
-                alterarUsuario(*usuarios, *numUsuarios);
-                break;
+        switch (opcao)
+        {
+        case 1:
+            cadastrarUsuario(usuarios, numUsuarios);
+            break;
+        case 2:
+            printf("Digite o nome do usuário a ser excluído: ");
+            scanf("%s", nomeUsuario);
+            excluirUsuario(*usuarios, numUsuarios, nomeUsuario);
+            break;
+        case 3:
+            alterarUsuario(*usuarios, *numUsuarios);
+            break;
         }
 
     } while (opcao != 0);
 }
 
-void cadastrarShow(Show** shows, int *numShows) {
+void cadastrarShow(Show **shows, int *numShows)
+{
     (*numShows)++;
     *shows = realloc(*shows, (*numShows) * sizeof(Show));
 
-    if (*shows == NULL) {
+    if (*shows == NULL)
+    {
         printf("Erro ao alocar memória para shows.\n");
         exit(EXIT_FAILURE);
     }
@@ -235,29 +262,37 @@ void cadastrarShow(Show** shows, int *numShows) {
     printf("\nShow cadastrado com sucesso!\n");
 }
 // Função para listar os shows
-void listarShows(Show *shows, int numShows) {
-    for (int i = 0; i < numShows; i++) {
+void listarShows(Show *shows, int numShows)
+{
+    for (int i = 0; i < numShows; i++)
+    {
         exibirShow(shows[i]);
     }
 }
-void salvarShows(Show *shows, int numShows) {
+void salvarShows(Show *shows, int numShows)
+{
     FILE *arquivo = fopen("shows.dat", "wb");
 
-    if (arquivo != NULL) {
+    if (arquivo != NULL)
+    {
         fwrite(&numShows, sizeof(int), 1, arquivo);
         fwrite(shows, sizeof(Show), numShows, arquivo);
 
         fclose(arquivo);
-    } else {
+    }
+    else
+    {
         printf("Erro ao abrir o arquivo para escrita.\n");
     }
 }
 
 // Função para carregar os shows do disco
-Show* carregarShows(int *numShows) {
+Show *carregarShows(int *numShows)
+{
     FILE *arquivo = fopen("shows.dat", "rb");
 
-    if (arquivo != NULL) {
+    if (arquivo != NULL)
+    {
         fread(numShows, sizeof(int), 1, arquivo);
 
         Show *shows = (Show *)malloc(*numShows * sizeof(Show));
@@ -266,18 +301,22 @@ Show* carregarShows(int *numShows) {
         fclose(arquivo);
 
         return shows;
-    } else {
+    }
+    else
+    {
         printf("Erro ao abrir o arquivo para leitura.\n");
         return NULL;
     }
 }
 
 // Função para pausar a execução por alguns segundos
-void pausa() {
+void pausa()
+{
     sleep(1);
 }
 
-void coletarInfoCartaoCredito() {
+void coletarInfoCartaoCredito()
+{
     int parcelas;
     char nCartaoC[20];
     char ccvCartaoC[4];
@@ -288,13 +327,15 @@ void coletarInfoCartaoCredito() {
     printf("Digite o número do cartão de crédito (XXXXXXXXXXXXXXXX): ");
     scanf("%19s", nCartaoC);
 
-    if (strlen(nCartaoC) != 16 || strspn(nCartaoC, "0123456789") != 16) {
+    if (strlen(nCartaoC) != 16 || strspn(nCartaoC, "0123456789") != 16)
+    {
         printf("Número do cartão de crédito inválido. Certifique-se de inserir exatamente 16 dígitos numéricos.\n");
         return;
     }
 
     printf("Digite a data de validade do cartão (MM/AAAA): ");
-    if (scanf("%d/%d", &validade.mes, &validade.ano) != 2 || validade.mes < 1 || validade.mes > 12 || validade.ano < 2023) {
+    if (scanf("%d/%d", &validade.mes, &validade.ano) != 2 || validade.mes < 1 || validade.mes > 12 || validade.ano < 2023)
+    {
         printf("Data de validade do cartão inválida. Certifique-se de inserir uma data válida.\n");
         return;
     }
@@ -302,7 +343,8 @@ void coletarInfoCartaoCredito() {
     printf("Digite o código de segurança do cartão: ");
     scanf("%3s", ccvCartaoC);
 
-    if (strlen(ccvCartaoC) != 3 || strspn(ccvCartaoC, "0123456789") != 3) {
+    if (strlen(ccvCartaoC) != 3 || strspn(ccvCartaoC, "0123456789") != 3)
+    {
         printf("Código de segurança do cartão inválido. Certifique-se de inserir exatamente 3 dígitos numéricos.\n");
         return;
     }
@@ -310,7 +352,8 @@ void coletarInfoCartaoCredito() {
     printf("Escolha o número de parcelas (1 a 12): ");
     scanf("%d", &parcelas);
 
-    if (parcelas < 1 || parcelas > 12) {
+    if (parcelas < 1 || parcelas > 12)
+    {
         printf("Número de parcelas inválido. Certifique-se de escolher entre 1 e 12.\n");
         return;
     }
@@ -321,7 +364,8 @@ void coletarInfoCartaoCredito() {
     printf("\nDados de pagamento válidos\n");
 }
 
-void coletarInfoCartaoDebito() {
+void coletarInfoCartaoDebito()
+{
     char nCartaoD[20];
     char ccvCartaoD[4];
     Data validadeDebito;
@@ -331,13 +375,15 @@ void coletarInfoCartaoDebito() {
     printf("Digite o número do cartão de débito (XXXXXXXXXXXXXXXX): ");
     scanf("%19s", nCartaoD);
 
-    if (strlen(nCartaoD) != 16 || strspn(nCartaoD, "0123456789") != 16) {
+    if (strlen(nCartaoD) != 16 || strspn(nCartaoD, "0123456789") != 16)
+    {
         printf("Número do cartão de débito inválido. Certifique-se de inserir exatamente 16 dígitos numéricos.\n");
         return;
     }
 
     printf("Digite a data de validade do cartão (MM/AAAA): ");
-    if (scanf("%d/%d", &validadeDebito.mes, &validadeDebito.ano) != 2 || validadeDebito.mes < 1 || validadeDebito.mes > 12 || validadeDebito.ano < 2023) {
+    if (scanf("%d/%d", &validadeDebito.mes, &validadeDebito.ano) != 2 || validadeDebito.mes < 1 || validadeDebito.mes > 12 || validadeDebito.ano < 2023)
+    {
         printf("Data de validade do cartão inválida. Certifique-se de inserir uma data válida.\n");
         return;
     }
@@ -345,7 +391,8 @@ void coletarInfoCartaoDebito() {
     printf("Digite o código de segurança do cartão: ");
     scanf("%3s", ccvCartaoD);
 
-    if (strlen(ccvCartaoD) != 3 || strspn(ccvCartaoD, "0123456789") != 3) {
+    if (strlen(ccvCartaoD) != 3 || strspn(ccvCartaoD, "0123456789") != 3)
+    {
         printf("Código de segurança do cartão inválido. Certifique-se de inserir exatamente 3 dígitos numéricos.\n");
         return;
     }
@@ -357,25 +404,29 @@ void coletarInfoCartaoDebito() {
 }
 
 // Função para gerar uma chave PIX aleatória
-void gerarChavePIX(char* chavePix) {
+void gerarChavePIX(char *chavePix)
+{
     const char caracteresPermitidos[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&*#@";
     const int comprimentoChave = 40;
 
     srand(time(NULL));
-    for (int i = 0; i < comprimentoChave; ++i) {
+    for (int i = 0; i < comprimentoChave; ++i)
+    {
         chavePix[i] = caracteresPermitidos[rand() % (sizeof(caracteresPermitidos) - 1)];
     }
     chavePix[comprimentoChave] = '\0';
 }
 
-void coletarInfoPIX() {
+void coletarInfoPIX()
+{
     char chavePIX[41];
     gerarChavePIX(chavePIX);
     printf("\n=== Informações do PIX ===\n");
     printf("Chave PIX gerada: %s\n", chavePIX);
 }
 
-void menuPagamento() {
+void menuPagamento()
+{
     int opcao;
 
     printf("\nMenu de Pagamento:\n");
@@ -387,27 +438,30 @@ void menuPagamento() {
     printf("Escolha uma opção de pagamento: ");
     scanf("%d", &opcao);
 
-    switch (opcao) {
-        case 1:
-            coletarInfoCartaoCredito();
-            break;
-        case 2:
-            coletarInfoCartaoDebito();
-            break;
-        case 3:
-            coletarInfoPIX();
-            break;
-        case 0:
-            break;
-        default:
-            printf("Opção inválida!\n");
+    switch (opcao)
+    {
+    case 1:
+        coletarInfoCartaoCredito();
+        break;
+    case 2:
+        coletarInfoCartaoDebito();
+        break;
+    case 3:
+        coletarInfoPIX();
+        break;
+    case 0:
+        break;
+    default:
+        printf("Opção inválida!\n");
     }
 }
 
-void menuShows(Show **shows, int *numShows) {
+void menuShows(Show **shows, int *numShows)
+{
     int opcao;
 
-    do {
+    do
+    {
         printf("\n1. Cadastrar Show\n");
         printf("2. Listar Shows\n");
         printf("3. Salvar Shows\n");
@@ -418,38 +472,39 @@ void menuShows(Show **shows, int *numShows) {
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
-        switch (opcao) {
-            case 1:
-                cadastrarShow(shows, numShows);
-                break;
-            case 2:
-                listarShows(*shows, *numShows);
-                break;
-            case 3:
-                salvarShows(*shows, *numShows);
-                break;
-            case 4:
-                free(*shows);
-                *shows = carregarShows(numShows);
-                break;
-            case 5:
-                menuPagamento();
-                break;
+        switch (opcao)
+        {
+        case 1:
+            cadastrarShow(shows, numShows);
+            break;
+        case 2:
+            listarShows(*shows, *numShows);
+            break;
+        case 3:
+            salvarShows(*shows, *numShows);
+            break;
+        case 4:
+            free(*shows);
+            *shows = carregarShows(numShows);
+            break;
+        case 5:
+            menuPagamento();
+            break;
         }
 
     } while (opcao != 0);
 }
 
-
-
-int main() {
-        int numUsuarios = 0;
+int main()
+{
+    int numUsuarios = 0;
     usuario *usuarios = NULL;
     Show *shows = NULL;
     int numShows = 0;
     int opcao;
 
-    do {
+    do
+    {
         printf("\n1. Menu de Cadastro\n");
         printf("2. Menu de Shows\n");
         printf("3. Menu Pagamento\n");
@@ -458,16 +513,17 @@ int main() {
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
-        switch (opcao) {
-            case 1:
-                menuCadastro(&usuarios, &numUsuarios);
-                break;
-            case 2:
-                menuShows(&shows, &numShows);
-                break;
-            case 3:
-                menuPagamento();
-                break;
+        switch (opcao)
+        {
+        case 1:
+            menuCadastro(&usuarios, &numUsuarios);
+            break;
+        case 2:
+            menuShows(&shows, &numShows);
+            break;
+        case 3:
+            menuPagamento();
+            break;
         }
 
     } while (opcao != 0);
