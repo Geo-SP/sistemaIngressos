@@ -36,7 +36,7 @@ void excluirUsuario(usuario *usuarios, int *numUsuarios, const char *nomeUsuario
 void alterarUsuario(usuario *usuarios, int numUsuarios);
 void cadastrarUsuario(usuario **usuarios, int *numUsuarios);
 void SalvarUsuarios(usuario *usuarios, int NumUsuarios);
-void menuShows(Show **shows, int *numShows);
+void menuShows(Show **shows, int *numShows, usuario *usuarios, int numUsuarios);
 void cadastrarShow(Show **shows, int *numShows);
 Show *carregarShows(int *numShows);
 void exibirShow(Show show);
@@ -289,6 +289,44 @@ Show* carregarShows(int *numShows) {
         return NULL;
     }
 }
+void realizarCompra(usuario *usuarios, int numUsuarios, Show *shows, int numShows) {
+    int idShow;
+    int idUsuario;
+
+    // Listar shows disponíveis
+    listarShows(shows, numShows);
+
+    // Solicitar ID do show desejado
+    printf("\nDigite o ID do show que deseja comprar: ");
+    scanf("%d", &idShow);
+
+    // Verificar se o ID do show é válido
+    if (idShow < 1 || idShow > numShows) {
+        printf("ID do show inválido.\n");
+        return;
+    }
+
+    // Verificar se há ingressos disponíveis
+    if (shows[idShow - 1].ingressosDisponiveis <= 0) {
+        printf("Desculpe, ingressos esgotados para este show.\n");
+        return;
+    }
+
+    // Obter automaticamente o ID do usuário
+    // Pode ser feito de várias maneiras, por exemplo, gerando automaticamente ou escolhendo um usuário aleatório.
+    // Aqui, para simplificar, escolhemos o primeiro usuário disponível.
+    idUsuario = 1;
+
+    // Realizar o pagamento
+    printf("\nTotal a pagar: R$ %.2f\n", shows[idShow - 1].preco);
+    menuPagamento();
+
+    // Atualizar o número de ingressos disponíveis
+    shows[idShow - 1].ingressosDisponiveis--;
+
+    printf("\nCompra realizada com sucesso! Aproveite o show!\n");
+}
+
 
 // Função para pausar a execução por alguns segundos
 void pausa() {
@@ -422,7 +460,7 @@ void menuPagamento() {
     }
 }
 
-void menuShows(Show **shows, int *numShows) {
+void menuShows(Show **shows, int *numShows, usuario *usuarios, int numUsuarios) {
     int opcao;
 
     do {
@@ -451,7 +489,7 @@ void menuShows(Show **shows, int *numShows) {
                 *shows = carregarShows(numShows);
                 break;
             case 5:
-                menuPagamento();
+                realizarCompra(usuarios, numUsuarios, *shows, *numShows);
                 break;
         }
 
@@ -481,7 +519,7 @@ int main() {
                 menuCadastro(&usuarios, &numUsuarios);
                 break;
             case 2:
-                menuShows(&shows, &numShows);
+                menuShows(&shows, &numShows, usuarios, numUsuarios);
                 break;
             case 3:
                 menuPagamento();
