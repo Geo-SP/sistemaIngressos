@@ -100,7 +100,8 @@ void cadastrarUsuario(usuario **usuarios, int *numUsuarios) {
     printf("\nUsuário cadastrado com sucesso.\n");
 }
 
-void alterarUsuario(usuario *usuarios, int numUsuarios) {
+void alterarUsuario(usuario *usuarios, int numUsuarios)
+{
     char nomeUsuario[50];
 
     printf("Digite o nome do usuário a ser alterado: ");
@@ -108,28 +109,36 @@ void alterarUsuario(usuario *usuarios, int numUsuarios) {
 
     int encontrado = 0;
 
-    for (int i = 0; i < numUsuarios; ++i) {
-        if (strcmp(usuarios[i].nome, nomeUsuario) == 0) {
+    for (int i = 0; i < numUsuarios; ++i)
+    {
+        if (strcmp(usuarios[i].nome, nomeUsuario) == 0)
+        {
             printf("Usuário encontrado. Insira as novas informações:\n");
 
             printf("Digite o novo nome do usuário: ");
-            scanf("%s ", usuarios[i].nome);
+            scanf(" %s", usuarios[i].nome);
+            getchar();
 
             printf("Digite o novo sexo do usuário: ");
-            scanf("%s ", usuarios[i].sexo);
+            scanf(" %s", usuarios[i].sexo);
+            getchar();
 
             printf("Digite o novo email do usuário: ");
-            scanf("%s ", usuarios[i].email);
+            scanf(" %s", usuarios[i].email);
+            getchar();
 
             printf("Digite o novo CPF do usuário: ");
-            scanf("%s ", &usuarios[i].cpf);
+            scanf(" %s", &usuarios[i].cpf);
             validarCPF(usuarios[i].cpf);
+            getchar();
 
             printf("Digite a nova idade do usuário: ");
-            scanf("%d ", &usuarios[i].idade);
+            scanf("%d", &usuarios[i].idade);
+            getchar();
 
             printf("Digite o novo telefone do usuário: ");
-            scanf("%s ", &usuarios[i].telefone[0]);
+            scanf(" %s", &usuarios[i].telefone[0]);
+            getchar();
 
             printf("\nUsuário alterado com sucesso.\n");
             encontrado = 1;
@@ -137,7 +146,8 @@ void alterarUsuario(usuario *usuarios, int numUsuarios) {
         }
     }
 
-    if (!encontrado) {
+    if (!encontrado)
+    {
         printf("Usuário %s não encontrado.\n", nomeUsuario);
     }
 }
